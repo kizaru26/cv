@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Vietnam Number Converter</title>
+</head>
+
+<body style="font-family:Arial;text-align:center;padding:40px">
+
+<h2>Upload TXT → Remove 84</h2>
+
+<input type="file" id="file">
+
+<br><br>
+
+<button onclick="convert()">Convert</button>
+
+<script>
+
+function convert(){
+
+let file = document.getElementById("file").files[0];
+
+let reader = new FileReader();
+
+reader.onload = function(e){
+
+let lines = e.target.result.split(/\r?\n/);
+
+let output = [];
+
+lines.forEach(n => {
+
+n = n.replace(/\D/g,'');
+
+if(n.startsWith("84")){
+n = n.substring(2);
+}
+
+if(n.length>0){
+output.push(n);
+}
+
+});
+
+let blob = new Blob([output.join("\n")]);
+
+let a = document.createElement("a");
+
+a.href = URL.createObjectURL(blob);
+
+a.download = "hasil.txt";
+
+a.click();
+
+};
+
+reader.readAsText(file);
+
+}
+
+</script>
+
+</body>
+</html>
